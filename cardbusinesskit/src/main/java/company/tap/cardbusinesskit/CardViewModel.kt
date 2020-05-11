@@ -1,5 +1,6 @@
 package company.tap.cardbusinesskit
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -28,7 +29,7 @@ class CardViewModel : ViewModel() {
             ))
     }
 
-    fun getData(success: Boolean) = repository.makeFakeApiRequest(success)
+    fun getData(context: Context) = repository.initAppApi(context)
 
     override fun onCleared() {
         super.onCleared()

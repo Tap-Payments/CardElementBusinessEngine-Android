@@ -6,7 +6,7 @@ package company.tap.cardbusinesskit
  * Copyright © 2020 Tap Payments. All rights reserved.
  *
  */
-interface FakeApiResponse {
-    fun onSuccess()
-    fun onError()
+object ApiService {
+    const val BASE_URL = "https://api.tap.company/v2/"
+    const val INIT = "init"
 }

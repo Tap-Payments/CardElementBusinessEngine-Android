@@ -16,6 +16,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.liveData.observe(this, Observer {
             result_text.text = result_text.text.toString() + "\n" + it
         })
-        viewModel.getData(true)
+        viewModel.getData(this)
     }
 }
