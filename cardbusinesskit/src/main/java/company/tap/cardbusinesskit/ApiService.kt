@@ -7,6 +7,5 @@ package company.tap.cardbusinesskit
  *
  */
 object ApiService {
-    const val BASE_URL = "https://api.tap.company/v2/"
     const val INIT = "init"
 }

@@ -1,6 +1,5 @@
 package company.tap.cardbusinesskit
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,17 +18,17 @@ class CardViewModel : ViewModel() {
     val liveData = MutableLiveData<String>()
 
     init {
-        compositeDisposable.add(repository.resultSubject
+        compositeDisposable.add(repository.resultObservable
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { liveData.value = "Loading" }
             .doOnTerminate { liveData.value = "Finished" }
             .subscribe(
-                { data -> liveData.value = data.status },
+                { data -> liveData.value = data },
                 { error -> liveData.value = error.message }
             ))
     }
 
-    fun getData(context: Context) = repository.initAppApi(context)
+    fun getData() = repository.initAppApi()
 
     override fun onCleared() {
         super.onCleared()
