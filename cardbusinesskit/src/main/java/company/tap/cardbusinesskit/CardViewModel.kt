@@ -24,7 +24,7 @@ class CardViewModel : ViewModel() {
             .doOnSubscribe { liveData.value = "Loading" }
             .doOnTerminate { liveData.value = "Finished" }
             .subscribe(
-                { data -> liveData.value = data },
+                { data -> liveData.value = data.status },
                 { error -> liveData.value = error.message }
             ))
     }

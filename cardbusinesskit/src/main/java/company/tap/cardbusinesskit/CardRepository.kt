@@ -16,9 +16,9 @@ import retrofit2.Response
  * Copyright © 2020 Tap Payments. All rights reserved.
  *
  */
-class CardRepository : APIRequestCallback<BaseResponse> {
+class CardRepository : APIRequestCallback<InitResponse> {
 
-    val resultSubject = BehaviorSubject.create<String>()
+    val resultSubject = BehaviorSubject.create<InitResponse>()
 
     fun initAppApi(context: Context) {
         AppInfo.setAuthToken(context, "sk_test_kovrMB0mupFJXfNZWx6Etg5y", "company.tap.goSellSDKExample")
@@ -26,13 +26,17 @@ class CardRepository : APIRequestCallback<BaseResponse> {
         NetworkController.getInstance().processRequest(TapMethodType.GET, ApiService.INIT, null, this, context)
     }
 
-    override fun onSuccess(responseCode: Int, serializedResponse: Response<BaseResponse>?) {
-        resultSubject.onNext("Success")
-        resultSubject.onComplete()
+    override fun onSuccess(responseCode: Int, serializedResponse: Response<InitResponse>?) {
+        serializedResponse?.body()?.let {
+            resultSubject.onNext(it)
+            resultSubject.onComplete()
+        }
     }
 
     override fun onFailure(errorDetails: GoSellError?) {
-        resultSubject.onError(Throwable("Error"))
+        errorDetails?.let {
+            resultSubject.onError(it.throwable)
+        }
     }
 
 }
