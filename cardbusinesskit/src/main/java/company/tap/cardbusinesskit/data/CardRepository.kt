@@ -1,6 +1,7 @@
-package company.tap.cardbusinesskit
+package company.tap.cardbusinesskit.data
 
 import com.google.gson.JsonElement
+import company.tap.cardbusinesskit.mvi.CardViewState
 import company.tap.tapnetworkkit.controller.NetworkController
 import company.tap.tapnetworkkit.enums.TapMethodType
 import company.tap.tapnetworkkit.exception.GoSellError
@@ -16,17 +17,21 @@ import retrofit2.Response
  */
 class CardRepository : APIRequestCallback {
 
-    val resultObservable = BehaviorSubject.create<String>()
+    val resultObservable = BehaviorSubject.create<CardViewState>()
 
     fun getInitData() {
         NetworkController.getInstance()
-            .processRequest(TapMethodType.GET, ApiService.INIT, null, this, INIT_CODE)
+            .processRequest(TapMethodType.GET, ApiService.INIT, null, this,
+                INIT_CODE
+            )
     }
 
     override fun onSuccess(responseCode: Int, requestCode: Int, response: Response<JsonElement>?) {
         if (requestCode == INIT_CODE) {
             response?.body()?.let {
-                resultObservable.onNext(it.toString())
+                val viewState =
+                    CardViewState(initResponse = it.toString())
+                resultObservable.onNext(viewState)
                 resultObservable.onComplete()
             }
         }

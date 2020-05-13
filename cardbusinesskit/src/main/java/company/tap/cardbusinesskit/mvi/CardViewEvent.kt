@@ -1,4 +1,4 @@
-package company.tap.cardbusinesskit
+package company.tap.cardbusinesskit.mvi
 
 import company.tap.commonmodels.TapCard
 
