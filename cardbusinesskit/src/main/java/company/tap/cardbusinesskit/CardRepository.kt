@@ -18,28 +18,31 @@ class CardRepository : APIRequestCallback {
 
     val resultObservable = BehaviorSubject.create<String>()
 
-    fun initAppApi() {
+    fun getInitData() {
         NetworkController.getInstance()
-            .processRequest(
-                TapMethodType.GET,
-                ApiService.INIT,
-                null,
-                this,
-                1
-            )
+            .processRequest(TapMethodType.GET, ApiService.INIT, null, this, INIT_CODE)
     }
 
     override fun onSuccess(responseCode: Int, requestCode: Int, response: Response<JsonElement>?) {
-        response?.body()?.let {
-            resultObservable.onNext(it.toString())
-            resultObservable.onComplete()
+        if (requestCode == INIT_CODE) {
+            response?.body()?.let {
+                resultObservable.onNext(it.toString())
+                resultObservable.onComplete()
+            }
         }
     }
 
     override fun onFailure(requestCode: Int, errorDetails: GoSellError?) {
         errorDetails?.let {
-            resultObservable.onError(it.throwable)
+            if (it.throwable != null)
+                resultObservable.onError(it.throwable)
+            else
+                resultObservable.onError(Throwable(it.errorMessage))
         }
+    }
+
+    companion object {
+        private const val INIT_CODE = 1
     }
 
 }

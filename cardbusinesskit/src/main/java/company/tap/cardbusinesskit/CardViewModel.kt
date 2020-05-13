@@ -2,6 +2,7 @@ package company.tap.cardbusinesskit
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import company.tap.cardbusinesskit.CardViewEvent.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 
@@ -28,7 +29,13 @@ class CardViewModel : ViewModel() {
             ))
     }
 
-    fun getData() = repository.initAppApi()
+    private fun getInitData() = repository.getInitData()
+
+    fun processEvent(event: CardViewEvent) {
+        when (event) {
+            InitEvent -> getInitData()
+        }
+    }
 
     override fun onCleared() {
         super.onCleared()
