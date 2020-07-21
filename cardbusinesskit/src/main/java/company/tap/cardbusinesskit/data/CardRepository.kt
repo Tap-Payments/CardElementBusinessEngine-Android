@@ -1,6 +1,8 @@
 package company.tap.cardbusinesskit.data
 
+import com.google.gson.Gson
 import com.google.gson.JsonElement
+import company.tap.cardbusinesskit.models.InitResponse
 import company.tap.cardbusinesskit.mvi.CardViewState
 import company.tap.tapnetworkkit.controller.NetworkController
 import company.tap.tapnetworkkit.enums.TapMethodType
@@ -29,8 +31,8 @@ class CardRepository : APIRequestCallback {
     override fun onSuccess(responseCode: Int, requestCode: Int, response: Response<JsonElement>?) {
         if (requestCode == INIT_CODE) {
             response?.body()?.let {
-                val viewState =
-                    CardViewState(initResponse = it.toString())
+                val initResponse = Gson().fromJson(it, InitResponse::class.java)
+                val viewState = CardViewState(initResponse = initResponse)
                 resultObservable.onNext(viewState)
                 resultObservable.onComplete()
             }

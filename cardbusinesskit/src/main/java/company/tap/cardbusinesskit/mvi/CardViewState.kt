@@ -1,5 +1,8 @@
 package company.tap.cardbusinesskit.mvi
 
+import company.tap.cardbusinesskit.models.InitResponse
+import company.tap.cardbusinesskit.models.Merchant
+
 /**
  *
  * Created by Mario Gamal on 5/13/20
@@ -7,6 +10,5 @@ package company.tap.cardbusinesskit.mvi
  *
  */
 data class CardViewState (
-    var initResponse: String? = null,
-    var merchant: String? = null
+    var initResponse: InitResponse? = null
 )

@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun renderView(data: CardViewState?) {
         data?.initResponse?.let {
-            concatText(it)
+            it.data?.merchant?.logo?.let { it1 -> concatText(it1) }
         }
     }
 
