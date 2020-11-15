@@ -2,6 +2,7 @@ package company.tap.cardbusinesskit.mvi
 
 import company.tap.cardbusinesskit.models.InitResponse
 import company.tap.cardbusinesskit.models.Merchant
+import company.tap.cardbusinesskit.testmodels.MockAPIResponse
 
 /**
  *
@@ -10,5 +11,6 @@ import company.tap.cardbusinesskit.models.Merchant
  *
  */
 data class CardViewState (
-    var initResponse: InitResponse? = null
+    var initResponse: InitResponse? = null,
+    var mockAPIResponse: MockAPIResponse? = null
 )

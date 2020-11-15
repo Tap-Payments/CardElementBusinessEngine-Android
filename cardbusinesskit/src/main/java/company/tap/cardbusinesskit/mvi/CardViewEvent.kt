@@ -12,4 +12,7 @@ sealed class CardViewEvent {
     object InitEvent : CardViewEvent()
     data class SaveCardEvent(val card: TapCard) : CardViewEvent()
     data class TokenizeCardEvent(val card: TapCard) : CardViewEvent()
+
+    object MockEvent : CardViewEvent()
+    data class MockAPIResponse(val card: TapCard):CardViewEvent()
 }

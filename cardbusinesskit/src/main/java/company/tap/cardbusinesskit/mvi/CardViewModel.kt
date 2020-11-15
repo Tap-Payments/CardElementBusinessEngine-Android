@@ -1,5 +1,6 @@
 package company.tap.cardbusinesskit.mvi
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import company.tap.cardbusinesskit.mvi.CardViewEvent.*
@@ -19,6 +20,7 @@ class CardViewModel : ViewModel() {
     private val repository = CardRepository()
     private val compositeDisposable = CompositeDisposable()
     val liveData = MutableLiveData<Resource<CardViewState>>()
+    val context:Context?=null
 
     init {
         compositeDisposable.add(repository.resultObservable
@@ -35,10 +37,16 @@ class CardViewModel : ViewModel() {
         repository.getInitData()
     }
 
-    fun processEvent(event: CardViewEvent) {
+    fun processEvent(event: CardViewEvent,context: Context) {
         when (event) {
             InitEvent -> getInitData()
+            MockEvent -> getMockData(context)
+
         }
+    }
+
+    private fun getMockData(context: Context) {
+        repository.getJsonDataFromAsset(context,"dummyapiresponse.json")
     }
 
     override fun onCleared() {
